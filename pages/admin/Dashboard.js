@@ -18,7 +18,7 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
 import Image from "next/image";
-// import Logo from "./static/logoLight.webp";
+import Logo from "./static/logoLight.webp";
 import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import { WidthFull } from "@mui/icons-material";
 
@@ -40,8 +40,8 @@ const clients = [
 const navigation = [
   { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
   { name: "Users", href: "#", icon: UsersIcon, current: false },
-  { name: "Blog", href: "#", icon: FolderIcon, current: false },
-  { name: "Calendar", href: "#", icon: CalendarIcon, current: false },
+  { name: "Blogs", href: "#", icon: FolderIcon, current: false },
+  { name: "Category", href: "#", icon: CalendarIcon, current: false },
   { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
 ];
 
@@ -121,7 +121,7 @@ export default function Example() {
                   {/* Sidebar component, swap this element with another sidebar if you like */}
                   <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4 ring-1 ring-white/10">
                     <div className="flex h-16 shrink-0 items-center">
-                      <img className="h-8 w-auto" src={Logo} alt="Logo" />
+                      <Image className="h-8 w-auto" src={Logo} alt="Logo" />
                     </div>
                     <nav className="flex flex-1 flex-col">
                       <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -172,18 +172,6 @@ export default function Example() {
                               </li>
                             ))}
                           </ul>
-                        </li>
-                        <li className="mt-auto">
-                          <a
-                            href="#"
-                            className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
-                          >
-                            <Cog6ToothIcon
-                              className="h-6 w-6 shrink-0"
-                              aria-hidden="true"
-                            />
-                            Settings
-                          </a>
                         </li>
                       </ul>
                     </nav>
@@ -250,18 +238,6 @@ export default function Example() {
                       </li>
                     ))}
                   </ul>
-                </li>
-                <li className="mt-auto">
-                  <a
-                    href="#"
-                    className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
-                  >
-                    <Cog6ToothIcon
-                      className="h-6 w-6 shrink-0"
-                      aria-hidden="true"
-                    />
-                    Settings
-                  </a>
                 </li>
               </ul>
             </nav>
