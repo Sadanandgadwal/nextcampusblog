@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import Image from "next/image";
-import Logo from "../static/nextcampus.jpg";
+import Logo from "../static/logoLight.webp";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -40,7 +40,7 @@ export default function Signin() {
           <div className="mx-auto w-full max-w-sm lg:w-96">
             <div>
               <ToastContainer />
-              <img className="h-20 w-auto" src={Logo} alt="Logo" />
+              <Image className="h-20 w-auto " src={Logo} alt="Logo" />
               <h2 className="mt-4 text-2xl font-bold leading-9 tracking-tight text-gray-900">
                 Sign In
               </h2>
@@ -97,10 +97,10 @@ export default function Signin() {
 
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                      <div>
+                      {/* <div>
                         {" "}
                         <Link href="/Register">Create New Account </Link>
-                      </div>
+                      </div> */}
                     </div>
 
                     <div className="text-sm leading-6">
@@ -159,12 +159,19 @@ export default function Signin() {
             </div>
           </div>
         </div>
-        <div className="relative hidden w-0 h-screen flex-1 lg:block">
+        <div className=" relative hidden w-0 h-screen flex-1 lg:block">
           <img
             className="absolute inset-0 h-full w-full object-cover"
-            src="https://images.unsplash.com/photo-1486520299386-6d106b22014b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80"
+            src="https://img.freepik.com/free-vector/blurred-abstract-background-design_1107-169.jpg?w=1060&t=st=1687438155~exp=1687438755~hmac=31acfba67267137d7efc6580b30b550c5b62c1bcaf8a153bf880994521fe97ed
+            "
             alt=""
           />
+          <div className="absolute text-5xl text-white  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            Register if you Don't have account ?{"  "}
+            <div className="text-4xl mt-3 text-gray-300">
+              <Link href="/Register">Click Here</Link>
+            </div>
+          </div>
         </div>
       </div>
     </>

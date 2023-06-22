@@ -1,5 +1,6 @@
 import Image from "next/image";
-import Logo from "../static/nextcampus.jpg";
+import Link from "next/link";
+import Logo from "../static/logoLight.webp";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -99,7 +100,7 @@ export default function Register() {
           <div className="mx-auto w-full max-w-sm lg:w-96">
             <div>
               <ToastContainer />
-              <img className="h-20 w-auto" src="" alt="Logo" />
+              <Image className="h-20 w-auto" src={Logo} alt="Logo" />
               <h2 className="mt-4 text-2xl font-bold leading-9 tracking-tight text-gray-900">
                 Register Here
               </h2>
@@ -128,6 +129,7 @@ export default function Register() {
                         value={name}
                         onChange={(event) => setName(event.target.value)}
                         className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        placeholder="enter Name"
                       />
                     </div>
                   </div>
@@ -148,19 +150,21 @@ export default function Register() {
                         onChange={(event) => setMobile(event.target.value)}
                         autoComplete="mobile"
                         className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        placeholder="enter Number"
                       />
                     </div>
                   </div>
-
-                  <div></div>
                   <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      Email address
-                    </label>
-                    <div className="mt-2">
+                    <div className="relative">
+                      <label
+                        htmlFor="mobile"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        Email Address
+                      </label>
+                      <div className="absolute">
+                        <i className=" text-gray-400 z-20 hover:text-gray-500"></i>
+                      </div>
                       <input
                         id="email"
                         name="email"
@@ -168,10 +172,44 @@ export default function Register() {
                         value={email}
                         onChange={(event) => setEmail(event.target.value)}
                         autoComplete="email"
-                        className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className=" leading-6 pr-20 z-0 focus:shadow focus:outline-none block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        placeholder="enter email"
                       />
+                      <div className="absolute top-7  right-2">
+                        <button className="h-7 w-20 text-white rounded-lg bg-blue-700 hover:bg-blue-600">
+                          Submit
+                        </button>
+                      </div>
                     </div>
                   </div>
+                  {/* <div>
+                    <div>
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        Email address
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          id="email"
+                          name="email"
+                          type="email"
+                          value={email}
+                          onChange={(event) => setEmail(event.target.value)}
+                          autoComplete="email"
+                          className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
+                      </div>
+
+                      <div className="absolute top-2 right-2">
+                        <button className="h-10 w-20 text-white rounded-lg bg-blue-700 hover:bg-blue-600">
+                          Submit
+                        </button>
+                      </div>
+                    </div>
+                  </div> */}
+
                   {/* otp section */}
                   {/* <button className="bg-green-500 px-7 py-2 ml-40 rounded-md text-sm text-white font-semibold" onClick={toggleModel}>verify your Email</button> */}
                   <div>
@@ -190,6 +228,7 @@ export default function Register() {
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}
                         className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        placeholder="enter Password"
                       />
                     </div>
                   </div>
@@ -209,6 +248,7 @@ export default function Register() {
                         value={cpassword}
                         onChange={(event) => setCpassword(event.target.value)}
                         className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        placeholder="enter Confirm Password"
                       />
                     </div>
                   </div>
@@ -277,12 +317,17 @@ export default function Register() {
             </div>
           </div>
         </div>
-        <div className="relative hidden w-0 h-screen flex-1 lg:block">
+        <div className=" relative hidden w-0 h-screen flex-1 lg:block">
           <img
             className="absolute inset-0 h-full w-full object-cover"
-            src="https://images.unsplash.com/photo-1486520299386-6d106b22014b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80"
+            src="https://img.freepik.com/free-vector/blurred-abstract-background-design_1107-169.jpg?w=1060&t=st=1687438155~exp=1687438755~hmac=31acfba67267137d7efc6580b30b550c5b62c1bcaf8a153bf880994521fe97ed
+            "
             alt=""
           />
+          <div className="absolute text-5xl text-white  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            Login if you already have account ?{"  "}
+            <Link href="/Signin">Click Here</Link>
+          </div>
         </div>
       </div>
     </>
