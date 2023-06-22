@@ -7,6 +7,17 @@ import "react-toastify/dist/ReactToastify.css";
 import Modal from "react-modal";
 import axios from "axios";
 const API_BASE = "http://localhost:8080";
+const customStyles = {
+  overlay: { backgroundColor: "rgba(0, 0, 0,0.5)" },
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+
+    transform: "translate(-50%, -50%)",
+  },
+};
 const signinByGoogle = async (event) => {
   try {
     const response = await axios.get(API_BASE + "/api/auth/google/url", {});
@@ -218,6 +229,7 @@ export default function Register() {
                     <Modal
                       isOpen={isOpen}
                       onRequestClose={() => setIsOpen(false)}
+                      style={customStyles}
                     >
                       <div className=" bg-white px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
                         <div className="mx-auto flex w-full max-w-md flex-col space-y-16">
@@ -239,7 +251,7 @@ export default function Register() {
                           <div>
                             <form action="" method="post">
                               <div className="flex flex-col space-y-16">
-                                <div className="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
+                                <div className="flex flex-row items-center justify-evenly mx-auto  w-full max-w-xs">
                                   <div className="w-16 h-16 ">
                                     <input
                                       className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
