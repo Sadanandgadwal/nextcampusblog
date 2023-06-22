@@ -102,7 +102,7 @@ export default function Register() {
               <ToastContainer />
               <Image className="h-20 w-auto" src={Logo} alt="Logo" />
               <h2 className="mt-4 text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                Register Here
+                Register
               </h2>
             </div>
 
