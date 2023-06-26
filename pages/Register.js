@@ -6,7 +6,17 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Modal from "react-modal";
 import axios from "axios";
-const API_BASE = "http://localhost:8080";
+const API_BASE = "http://localhost:8080/";
+
+const handleSigninWithGoogle = async (event) => {
+  event.preventDefault();
+  try {
+    const response = await axios.get(API_BASE + "api/auth/google/url", {});
+    window.location.href = response.data.data.authorizeUrl;
+  } catch (error) {
+    console.error(error);
+  }
+};
 const customStyles = {
   overlay: { backgroundColor: "rgba(0, 0, 0,0.5)" },
   content: {
@@ -18,31 +28,19 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
   },
 };
-const signinByGoogle = async (event) => {
-  try {
-    const response = await axios.get(API_BASE + "/api/auth/google/url", {});
-    toast.success("Registeration successfully done");
-    console.log(response.data); // Handle the response data as needed
-  } catch (error) {
-    toast.error(error);
-  }
-  return;
-};
 export default function Register() {
-  //const [Result, setResult] = useState([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
   const [password, setPassword] = useState("");
   const [cpassword, setCpassword] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const[newOtp,setOtp]=useState("");
   //name validation
   const validateName = () => {
     const regex = /^[A-Za-z\s]+$/;
     if (!regex.test(name)) {
       toast.error("Invalid name. Only letters and spaces are allowed.");
-      // alert(error);
-      // alert('Hi');
       return false;
     }
     return true;
@@ -77,11 +75,38 @@ export default function Register() {
     }
     return true;
   };
-  function toggleModel(model) {
-    if (model.style.display === "none") {
-      model.style.display = "block";
-    } else {
-      model.style.display = "none";
+  const handleOtpOperation=async()=>{
+    setIsOpen(true);
+    if(validateEmail())
+    {
+    try {
+      const response = await axios.post(API_BASE + "api/otp/sendOtp", {
+        email
+      });
+      toast.success("otp send successfully");
+    } catch (error) {
+      toast.error(error);
+    }
+    }
+  }
+  
+  const handleVerifyOtp=async()=>{
+    try {
+      // console.log('00000000',email);
+      console.log('----------------otp-----------',otp);
+      
+      const newEmail=email;
+      const newOtp=otp;
+      console.log("----------------",newEmail);
+      console.log(newOtp,"++++++++++++++++++++++++");
+      const response = await axios(API_BASE + "api/otp/verifyOtp", {
+        newEmail,
+        newOtp
+      });
+      toast.success("email Verified");
+      console.log("-----------------------",response);
+    } catch (error) {
+      toast.error(error);
     }
   }
   const handleSubmit = async (event) => {
@@ -97,7 +122,7 @@ export default function Register() {
           name,
           email,
           mobile,
-          password,
+          password
         });
         toast.success("Registeration successfully done");
         console.log(response.data); // Handle the response data as needed
@@ -118,7 +143,6 @@ export default function Register() {
                 Register
               </h2>
             </div>
-
             <div className="mt-10">
               <div>
                 <form
@@ -190,41 +214,15 @@ export default function Register() {
                       />
                       <div className="absolute top-7  right-2">
                         <button
-                          onClick={() => setIsOpen(true)}
+                          type="button"
+                          onClick={handleOtpOperation}
                           className="h-7 w-20 text-white rounded-lg bg-blue-700 hover:bg-blue-600"
                         >
-                          Submit
+                          Send OTP
                         </button>
                       </div>
                     </div>
                   </div>
-                  {/* <div>
-                    <div>
-                      <label
-                        htmlFor="email"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        Email address
-                      </label>
-                      <div className="mt-2">
-                        <input
-                          id="email"
-                          name="email"
-                          type="email"
-                          value={email}
-                          onChange={(event) => setEmail(event.target.value)}
-                          autoComplete="email"
-                          className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        />
-                      </div>
-
-                      <div className="absolute top-2 right-2">
-                        <button className="h-10 w-20 text-white rounded-lg bg-blue-700 hover:bg-blue-600">
-                          Submit
-                        </button>
-                      </div>
-                    </div>
-                  </div> */}
                   <div>
                     <Modal
                       isOpen={isOpen}
@@ -242,69 +240,28 @@ export default function Register() {
                             </div>
                             <div className="flex flex-row text-sm font-medium text-gray-400">
                               <p>
-                                We have sent a code to your email
-                                Sadanandgadwal@gmail.com
+                                We have sent a OTP to your {email}
                               </p>
                             </div>
                           </div>
-
                           <div>
-                            <form action="" method="post">
                               <div className="flex flex-col space-y-16">
                                 <div className="flex flex-row items-center justify-evenly mx-auto  w-full max-w-xs">
                                   <div className="w-16 h-16 ">
                                     <input
                                       className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
                                       type="text"
-                                      name=""
-                                      id=""
-                                    />
-                                  </div>
-                                  <div className="w-16 h-16 ">
-                                    <input
-                                      className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                                      type="text"
-                                      name=""
-                                      id=""
-                                    />
-                                  </div>
-                                  <div className="w-16 h-16 ">
-                                    <input
-                                      className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                                      type="text"
-                                      name=""
-                                      id=""
-                                    />
-                                  </div>
-                                  <div className="w-16 h-16 ">
-                                    <input
-                                      className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                                      type="text"
-                                      name=""
-                                      id=""
-                                    />
-                                  </div>
-                                  <div className="w-16 h-16 ">
-                                    <input
-                                      className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                                      type="text"
-                                      name=""
-                                      id=""
-                                    />
-                                  </div>
-                                  <div className="w-16 h-16 ">
-                                    <input
-                                      className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                                      type="text"
-                                      name=""
-                                      id=""
+                                      name="newOtp"
+                                      id="newOtp"  
+                                      value={newOtp}
+                                      onChange={(event) => setOtp(event.target.value)}
+                                      maxLength={6}  
                                     />
                                   </div>
                                 </div>
-
                                 <div className="flex flex-col space-y-5">
                                   <div>
-                                    <button className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-700 border-none text-white text-sm shadow-sm">
+                                    <button className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-700 border-none text-white text-sm shadow-sm" type="button" onClick={handleVerifyOtp}>                                      
                                       Verify Account
                                     </button>
                                   </div>
@@ -313,7 +270,7 @@ export default function Register() {
                                     <p>Didn't recieve code?</p>{" "}
                                     <a
                                       className="flex flex-row items-center text-blue-600"
-                                      href="http://"
+                                      href="#"
                                       target="_blank"
                                       rel="noopener noreferrer"
                                     >
@@ -322,14 +279,12 @@ export default function Register() {
                                   </div>
                                 </div>
                               </div>
-                            </form>
+                            
                           </div>
                         </div>
                       </div>{" "}
                     </Modal>
                   </div>
-                  {/* otp section */}
-                  {/* <button className="bg-green-500 px-7 py-2 ml-40 rounded-md text-sm text-white font-semibold" onClick={toggleModel}>verify your Email</button> */}
                   <div>
                     <label
                       htmlFor="password"
@@ -407,7 +362,16 @@ export default function Register() {
                   </div>
                 </form>
               </div>
-              <div className="mt-10">
+              <div>
+                    <button
+                      type="button"
+                      className="flex w-full justify-center mt-5 rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      onClick={handleSigninWithGoogle}
+                    >
+                      SignUp with Google
+                    </button>
+                  </div>
+              {/* <div className="mt-10">
                 <div className="relative">
                   <div
                     className="absolute inset-0 flex items-center"
@@ -415,22 +379,11 @@ export default function Register() {
                   >
                     <div className="w-full border-t border-gray-200" />
                   </div>
-                  {/* <div className="relative flex justify-center text-sm font-medium leading-6">
-                    <span className="bg-white px-6 text-gray-900">
-                      Or continue with
-                    </span>
-                  </div> */}
                 </div>
-              </div>
+              </div> */}
 
               <div>
-                {/* <button
-                  type="submit"
-                  onClick={signinByGoogle}
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Sign in with Google
-                </button> */}
+                
               </div>
             </div>
           </div>

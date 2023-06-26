@@ -5,7 +5,17 @@ import Logo from "../static/logoLight.webp";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const API_BASE = "http://localhost:8080";
+const API_BASE = "http://localhost:8080/";
+
+const handleSigninWithGoogle = async (event) => {
+  event.preventDefault();
+  try {
+    const response = await axios.get(API_BASE + "api/auth/google/url", {});
+    window.location.href = response.data.data.authorizeUrl;
+  } catch (error) {
+    console.error(error);
+  }
+};
 export default function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,16 +30,6 @@ export default function Signin() {
       console.log(response.data); // Handle the response data as needed
     } catch (error) {
       toast.error(error);
-      console.error(error);
-    }
-  };
-  const handleSigninWithGoogle = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await axios.post(API_BASE + "/api/auth/google/url", {});
-
-      console.log(response.data); // Handle the response data as needed
-    } catch (error) {
       console.error(error);
     }
   };
@@ -123,39 +123,15 @@ export default function Signin() {
                   </div>
                 </form>
               </div>
-
-              {/* <div className="mt-10">
-                <div className="relative">
-                  <div
-                    className="absolute inset-0 flex items-center"
-                    aria-hidden="true"
-                  >
-                    <div className="w-full border-t border-gray-200" />
+              <div>
+                    <button
+                      type="button"
+                      className="flex w-full justify-center mt-5 rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      onClick={handleSigninWithGoogle}
+                    >
+                      SignUp with Google
+                    </button>
                   </div>
-                  <div className="relative flex justify-center text-sm font-medium leading-6">
-                    <span className="bg-white px-6 text-gray-900">
-                      Or continue with
-                    </span>
-                  </div>
-                </div>
-                <div className="mt-6 grid grid-cols-1 gap-4">
-                  <a
-                    href="#"
-                    className="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
-                    onClick={handleSigninWithGoogle}
-                  >
-                    <svg
-                      className="h-5 w-5"
-                      aria-hidden="true"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    ></svg>
-                    <span className="text-sm font-semibold leading-6">
-                      Google
-                    </span>
-                  </a>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>
