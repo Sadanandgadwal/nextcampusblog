@@ -22,6 +22,7 @@
     "draftjs-to-html": "^0.9.1",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
+    "jsonwebtoken": "^9.0.0",
     "next": "13.3.0",
     "postcss": "8.4.23",
     "react": "18.2.0",

@@ -13,7 +13,8 @@ const handleSigninWithGoogle = async (event) => {
   try {
     const response = await axios.get(API_BASE + "api/auth/google/url", {});
     window.location.href = response.data.data.authorizeUrl;
-  } catch (error) {
+  } 
+  catch (error) {
     console.error(error);
   }
 };
@@ -35,7 +36,9 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [cpassword, setCpassword] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const[newOtp,setOtp]=useState("");
+  const[otp,setOtp]=useState("");
+//toggle Password 
+
   //name validation
   const validateName = () => {
     const regex = /^[A-Za-z\s]+$/;
@@ -91,37 +94,35 @@ export default function Register() {
   }
   
   const handleVerifyOtp=async()=>{
-    try {
-      // console.log('00000000',email);
-      console.log('----------------otp-----------',otp);
-      
-      const newEmail=email;
-      const newOtp=otp;
-      console.log("----------------",newEmail);
-      console.log(newOtp,"++++++++++++++++++++++++");
-      const response = await axios(API_BASE + "api/otp/verifyOtp", {
-        newEmail,
-        newOtp
+  
+      // toast.error('----------------otp-----------',otp);
+      try{
+      const response = await axios.post(API_BASE+"api/otp/verifyOtp", {
+        newEmail:email,
+        newOtp:otp
       });
-      toast.success("email Verified");
+      toast.success(response.data);
+      setIsOpen(false);
       console.log("-----------------------",response);
-    } catch (error) {
+    }
+    catch(error)
+    {
       toast.error(error);
     }
-  }
+    } 
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (
       validateName() &&
-      validateEmail() &&
+      validateEmail() && 
       validateMobile() &&
       validatePassword()
     ) {
       try {
-        const response = await axios.post(API_BASE + "/api/auth/register", {
+        const response = await axios.post(API_BASE + "api/auth/register", {
           name,
-          email,
           mobile,
+          email,
           password
         });
         toast.success("Registeration successfully done");
@@ -251,9 +252,9 @@ export default function Register() {
                                     <input
                                       className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
                                       type="text"
-                                      name="newOtp"
-                                      id="newOtp"  
-                                      value={newOtp}
+                                      name="otp"
+                                      id="otp"  
+                                      value={otp}
                                       onChange={(event) => setOtp(event.target.value)}
                                       maxLength={6}  
                                     />
@@ -325,33 +326,6 @@ export default function Register() {
                       />
                     </div>
                   </div>
-
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <input
-                        id="remember-me"
-                        name="remember-me"
-                        type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      />
-                      <label
-                        htmlFor="remember-me"
-                        className="ml-3 block text-sm leading-6 text-gray-700"
-                      >
-                        Remember me
-                      </label>
-                    </div>
-
-                    <div className="text-sm leading-6">
-                      <a
-                        href="#"
-                        className="font-semibold text-indigo-600 hover:text-indigo-500"
-                      >
-                        Forgot password?
-                      </a>
-                    </div>
-                  </div>
-
                   <div>
                     <button
                       type="submit"

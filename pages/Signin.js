@@ -12,6 +12,7 @@ const handleSigninWithGoogle = async (event) => {
   try {
     const response = await axios.get(API_BASE + "api/auth/google/url", {});
     window.location.href = response.data.data.authorizeUrl;
+    localStorage.setItem("token", response.data.token);
   } catch (error) {
     console.error(error);
   }
@@ -26,6 +27,7 @@ export default function Signin() {
         email,
         password,
       });
+      localStorage.setItem("token", response.data.token);
       toast.success("Signed successfully");
       console.log(response.data); // Handle the response data as needed
     } catch (error) {

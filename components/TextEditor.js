@@ -38,7 +38,7 @@ const TextEditor = () => {
         />
       </div>
       <textarea
-        className="w-8/12 h-80 mt-5 p-5 bg-white text-black"
+        className="w-8/12 h-80 mt-5 p-5 bg-white text-white"
         disabled
         value={draftToHtml(state.editorStates)}
       />

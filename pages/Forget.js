@@ -3,30 +3,31 @@ import Logo from "../static/nextcampus.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { useState } from "react";
 const API_BASE = "http://localhost:8080";
-export default function Forgot() {
-  const sendOTP = async (email, otp) => {
-    const data = {
-      type: "number",
-      input: email,
-      otp: otp,
-    };
-
-    return await axios.post(API_BASE + "/api/otp", data);
+export default function Forget() {
+  const [email,setEmail]=useState();
+  const validateEmail = () => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regex.test(email)) {
+      toast.error("Invalid email address.");
+      return false;
+    }
+    return true;
   };
-
-  const handleotp = () => {
-    const email = document.getElementById("email").value;
-    const otp = document.getElementById("otp").value;
-
-    sendOTP(email, otp).then((response) => {
-      if (response.data.success) {
-        console.log("OTP sent successfully");
-      } else {
-        console.log("Error sending OTP");
-      }
-    });
-  };
+  const sendOtp=async()=>{
+    if(validateEmail())
+    {
+    try {
+      const response = await axios.post(API_BASE + "api/otp/sendOtp", {
+        email
+      });
+      toast.success("otp send successfully");
+    } catch (error) {
+      toast.error(error);
+    }
+    }
+  }
   return (
     <div className="flex justify-items-center">
       <div className="mt-10 w-96 my-8">
@@ -38,7 +39,7 @@ export default function Forgot() {
           </h2>
         </div>
         <div>
-          <form action="#" method="POST" className="space-y-6">
+          <form method="POST" className="space-y-6" onSubmit={sendOtp}>
             <div>
               <label
                 htmlFor="email"
@@ -53,7 +54,8 @@ export default function Forgot() {
                   name="email"
                   type="email"
                   autoComplete="email"
-                  required
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
                   className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -61,7 +63,6 @@ export default function Forgot() {
             <div>
               <button
                 type="submit"
-                onClick={handleotp}
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Send OTP

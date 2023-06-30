@@ -8,6 +8,19 @@ const Header = () => {
   let { user_id } = router.query;
   if(!user_id )
     user_id="sign In"
+  const CreateBlog=()=>{
+    if(user_id=='sign In')
+      window.location.href = '/Signin';
+    else
+      {
+        const headers = {
+          'X-User-ID': user_id,
+        };
+        window.location.href = '/upload', { headers };
+      }
+      console.log('8888888888888888',user_id);
+      window.location.href=`/Upload`;
+  }
   // const writeBlog=async ()=>{
   //   try {
   //     const response = await axios.get(API_BASE+"blog/"+user_id+"/create", {});
@@ -31,7 +44,7 @@ const Header = () => {
         <div className="flex cursor-pointer items-center space-x-5 text-white">
           <Link href="/Register">{user_id}</Link>
           <div className="bg-[#3B91F8] text-white py-2 px-4 rounded-full">
-            <Link href="/Blog" >Lets Begin </Link>
+            <Link href="" onClick={CreateBlog} >Lets Begin </Link>
           </div>
         </div>
       </div>

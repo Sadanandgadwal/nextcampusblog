@@ -1,15 +1,46 @@
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Logo from "../static/nextcampus.jpg";
 import pLogo from "../static/martin-sanchez-G78c3DPmD_A-unsplash.jpg";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import Link from "next/link";
 
-const PostCard = () => {
+import axios from "axios";
+
+const PostCard = ({ blog }) => {
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory,setSelectedCategory] = useState([]);
+  const showCategory = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.get(API_BASE + "api/category/list", {});
+      const categoriesData = response.data.data;
+      setCategories(categoriesData);
+      console.log('---------',categories.name,'++++++++++',selectedCategory);
+    } catch (error) {
+      console.error(error);
+      setCategories([]);
+    }
+  };
+  
   return (
-    <Link href={`/post/123`}>
+    <Link key={blog._id} href={`/post/${blog._id}`}>
       <div className="flex place-content-center">
         <div className="max-w-[110rem] h-[11rem] flex pl-2 items-center gap-[2rem] cursor-pointer">
-          <div className="flex-[3.5] flex flex-col ">
+        <select
+              id="categoryDropdown"
+              className="w-full border-0 outline-none bg-transparent"
+              value={selectedCategory}
+              onChange={(event) => setSelectedCategory(event.target.value)}
+            >
+              {/* Dynamically generated options */}
+              {categories.map((category) => (
+                <option key={category._id} value={category._id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          <div className="flex-[3.5] flex flex-col">
             <div className="flex gap-[1rem]">
               <div className="grid place-items-center rounded-full overflow-hidden h-[1.6rem] w-[1.6rem]">
                 <Image
@@ -20,22 +51,16 @@ const PostCard = () => {
                   width={40}
                 />
               </div>
-              <div className="font-semibold">Sadanandgadwal</div>
+              {/* <div className="font-semibold">{blog.author}</div> */}
             </div>
-            <h1 className="font-bold text-2xl">
-              {" "}
-              This website is static for now with api integration it will
-              dynamic website
-            </h1>
-            <div className="text-[#787878]">
-              {" "}
-              because at present api is not ready so far to complete the design
-              we are going for static
-            </div>
+            <h1 className="font-bold text-2xl">{blog.title}</h1>
+            {/* <div className="text-[#787878]">{blog.description}</div> */}
             <div className="flex items-center justify-between text-[#787878]">
               <span className="my-2 text-[1rem]">
-                07 May 2023 • 5 min read •
-                <span className="bg-[#F2F3F2] p-1 rounded-full">Content</span>
+                {blog.date}{blog.category}
+                <span className="bg-[#F2F3F2] p-1 rounded-full">
+                  
+                </span>
               </span>
               <span className="cursor-pointer">
                 <BookmarkBorderIcon className="h-5 w-5" />
@@ -51,4 +76,32 @@ const PostCard = () => {
   );
 };
 
-export default PostCard;
+const AllPosts = () => {
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/api/blog/readAllBlogs"
+        );
+        const blogs = response.data.data;
+        setBlogs(blogs);
+        console.log(blogs.title);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
+  return (
+    <>
+      {Array.isArray(blogs) &&
+        blogs.map((blog) => <PostCard key={blog._id} blog={blog} />)}
+    </>
+  );
+};
+
+export default AllPosts;
