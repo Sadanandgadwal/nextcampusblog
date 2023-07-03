@@ -12,6 +12,8 @@ const handleSigninWithGoogle = async (event) => {
   event.preventDefault();
   try {
     const response = await axios.get(API_BASE + "api/auth/google/url", {});
+    toast.success('SignUp Successfully');
+    // alert(response.data.data.data.token);
     window.location.href = response.data.data.authorizeUrl;
   } 
   catch (error) {
@@ -103,13 +105,13 @@ export default function Register() {
       });
       toast.success(response.data);
       setIsOpen(false);
-      console.log("-----------------------",response);
+      // console.log("-----------------------",response);
     }
     catch(error)
     {
       toast.error(error);
     }
-    } 
+  } 
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (
@@ -119,14 +121,22 @@ export default function Register() {
       validatePassword()
     ) {
       try {
+        //console.log('-----',name,'-------',mobile,'----------',email,'-------------',password);
         const response = await axios.post(API_BASE + "api/auth/register", {
           name,
           mobile,
           email,
           password
         });
-        toast.success("Registeration successfully done");
-        console.log(response.data); // Handle the response data as needed
+        console.log('-----',name,'-------',mobile,'----------',email,'-------------',password);
+        // toast.success(response.data);
+        // console.log(response.data);
+         console.log('---------------------------');
+        // console.log(response.data.data); // Handle the response data as needed
+        // console.log(response.data.data.res.err);
+        // console.log(response.data.data.res);
+        // console.log(response.data.res.err);----------------------problem to show response msg
+        // console.log(response.error.err);
       } catch (error) {
         toast.error(error);
       }
@@ -180,7 +190,7 @@ export default function Register() {
                     </label>
                     <div className="mt-2">
                       <input
-                        id="mobile"
+                        id="mobile" 
                         name="mobile"
                         type="text"
                         value={mobile}
@@ -345,17 +355,6 @@ export default function Register() {
                       SignUp with Google
                     </button>
                   </div>
-              {/* <div className="mt-10">
-                <div className="relative">
-                  <div
-                    className="absolute inset-0 flex items-center"
-                    aria-hidden="true"
-                  >
-                    <div className="w-full border-t border-gray-200" />
-                  </div>
-                </div>
-              </div> */}
-
               <div>
                 
               </div>

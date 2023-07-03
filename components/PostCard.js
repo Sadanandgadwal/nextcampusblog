@@ -9,37 +9,25 @@ import axios from "axios";
 
 const PostCard = ({ blog }) => {
   const [categories, setCategories] = useState([]);
-  const [selectedCategory,setSelectedCategory] = useState([]);
-  const showCategory = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await axios.get(API_BASE + "api/category/list", {});
-      const categoriesData = response.data.data;
-      setCategories(categoriesData);
-      console.log('---------',categories.name,'++++++++++',selectedCategory);
-    } catch (error) {
-      console.error(error);
-      setCategories([]);
-    }
-  };
+  // const [selectedCategory,setSelectedCategory] = useState([]);
+  // const showCategory = async (event) => {
+  //   event.preventDefault();
+  //   try {
+  //     const response = await axios.get(API_BASE + "api/category/list", {});
+  //     const categoriesData = response.data.data;
+  //     setCategories(categoriesData);
+  //     console.log('---------',categories.name,'++++++++++',selectedCategory);
+  //   } catch (error) {
+  //     console.error(error);
+  //     setCategories([]);
+  //   }
+  // };
   
   return (
     <Link key={blog._id} href={`/post/${blog._id}`}>
       <div className="flex place-content-center">
         <div className="max-w-[110rem] h-[11rem] flex pl-2 items-center gap-[2rem] cursor-pointer">
-        <select
-              id="categoryDropdown"
-              className="w-full border-0 outline-none bg-transparent"
-              value={selectedCategory}
-              onChange={(event) => setSelectedCategory(event.target.value)}
-            >
-              {/* Dynamically generated options */}
-              {categories.map((category) => (
-                <option key={category._id} value={category._id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
+        
           <div className="flex-[3.5] flex flex-col">
             <div className="flex gap-[1rem]">
               <div className="grid place-items-center rounded-full overflow-hidden h-[1.6rem] w-[1.6rem]">

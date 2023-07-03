@@ -4,37 +4,42 @@ import Image from "next/image";
 import Logo from "../static/logoLight.webp";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
+import tokenApi from "@/components/tokenApi";
 import "react-toastify/dist/ReactToastify.css";
 const API_BASE = "http://localhost:8080/";
 
-const handleSigninWithGoogle = async (event) => {
-  event.preventDefault();
-  try {
-    const response = await axios.get(API_BASE + "api/auth/google/url", {});
-    window.location.href = response.data.data.authorizeUrl;
-    localStorage.setItem("token", response.data.token);
-  } catch (error) {
-    console.error(error);
-  }
-};
 export default function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleSignin = async (event) => {
     event.preventDefault();
+    console.log('--------',email);
     try {
-      const response = await axios.post(API_BASE + "/api/auth/login", {
+      const response = await axios.post(API_BASE + "api/auth/login", {
         email,
         password,
       });
-      localStorage.setItem("token", response.data.token);
-      toast.success("Signed successfully");
-      console.log(response.data); // Handle the response data as needed
+    toast.success(response.data.msg);
+    window.location.href = "/";
     } catch (error) {
-      toast.error(error);
+      //toast.error(res.data.error);
       console.error(error);
     }
   };
+  const handleSigninWithGoogle = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await tokenApi.post("api/auth/google/url");
+      const { authorizeUrl, token } = response.data.data;
+      window.location.href = authorizeUrl;
+      console.log(token);
+      // localStorage.setItem("token", token); // Remove this line since the token is handled by the tokenApi
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  
   return (
     <>
       <div className="flex min-h-full flex-1">
@@ -70,7 +75,7 @@ export default function Signin() {
                         autoComplete="email"
                         value={email}
                         onChange={(event) => setEmail(event.target.value)}
-                        required
+                        
                         className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -89,7 +94,7 @@ export default function Signin() {
                         name="password"
                         type="password"
                         autoComplete="current-password"
-                        required
+                      
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}
                         className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -131,7 +136,7 @@ export default function Signin() {
                       className="flex w-full justify-center mt-5 rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                       onClick={handleSigninWithGoogle}
                     >
-                      SignUp with Google
+                      SignIn with Google
                     </button>
                   </div>
             </div>
@@ -155,3 +160,24 @@ export default function Signin() {
     </>
   );
 }
+// const handleSigninWithGoogle = async (event) => {
+//   event.preventDefault();
+//   try {
+//     const response = await axios.get(API_BASE + "api/auth/google/url", {});
+//     console.log(response.data.data.authorizeUrl);
+//     window.location.href = response.data.data.authorizeUrl;
+//   } 
+//   catch (error) {
+//     console.error(error);
+//   }
+// };
+
+
+
+
+
+// const handleLogout = () => {
+//   logout();
+//   // Redirect to the login page or any other desired location
+//   window.location.href = "/login";
+// };

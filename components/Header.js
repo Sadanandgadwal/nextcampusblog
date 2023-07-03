@@ -5,7 +5,8 @@ import { useRouter } from 'next/router';
 const API_BASE = "http://localhost:8080/api/";
 const Header = () => {
   const router = useRouter();
-  let { user_id } = router.query;
+  let { token,user_id } = router.query;
+  console.log('0000000000',router.token);
   if(!user_id )
     user_id="sign In"
   const CreateBlog=()=>{
@@ -13,9 +14,11 @@ const Header = () => {
       window.location.href = '/Signin';
     else
       {
+        
         const headers = {
           'X-User-ID': user_id,
         };
+        console.log('----------',headers);
         window.location.href = '/upload', { headers };
       }
       console.log('8888888888888888',user_id);
@@ -42,7 +45,7 @@ const Header = () => {
           />
         </div>
         <div className="flex cursor-pointer items-center space-x-5 text-white">
-          <Link href="/Register">{user_id}</Link>
+          <Link href="/Signin">{user_id}</Link>
           <div className="bg-[#3B91F8] text-white py-2 px-4 rounded-full">
             <Link href="" onClick={CreateBlog} >Lets Begin </Link>
           </div>
