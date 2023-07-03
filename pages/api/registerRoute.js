@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_BASE = "http://localhost:8080";
+const API_BASE = "https://nextcampusblog.onrender.com";
 export default async function handler(req, res) {
   if (req.method === "POST") {
     try {

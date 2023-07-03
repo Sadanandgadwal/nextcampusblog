@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import Logo from "../../static/IMG_3488.jpg";
+import Logo from "../../static/logoLight.webp";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -18,7 +18,7 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
 import Image from "next/image";
-import Logo12 from "../../static/logoLight.webp";
+// import Logo12 from "../../static/logoLight.webp";
 import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import { WidthFull } from "@mui/icons-material";
 
@@ -187,7 +187,7 @@ export default function Example() {
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
             <div className="flex h-16 shrink-0 items-center">
-              <img className="h-8 w-auto" src={Logo12} alt="Logo12" />
+              <img className="h-10 w-auto" src={Logo} alt="Logo" />
             </div>
             <nav className="flex flex-1 flex-col">
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -351,7 +351,7 @@ export default function Example() {
                     className="overflow-hidden rounded-xl border border-gray-200"
                   >
                     <div className="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
-                      <img
+                      <Image
                         src={client.imageUrl}
                         alt={client.name}
                         className="h-12 w-12 flex-none rounded-lg bg-white object-cover ring-1 ring-gray-900/10"
