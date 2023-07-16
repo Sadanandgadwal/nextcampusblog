@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+
 export const tokenStore = create(
   persist(
     (set) => ({
@@ -14,10 +15,10 @@ export const tokenStore = create(
   )
 );
 
-export const Dashboard = create((set) => ({
-  componentState: "",
-  Action: (val) => set((state) => ({ componentState: val })),
-}));
+// export const Dashboard = create((set) => ({
+//   componentState: "",
+//   Action: (val) => set((state) => ({ componentState: val })),
+// }));
 // export const useWatchListStore = create(
 //   persist(watchListStore, { name: "watchList" })
 // );

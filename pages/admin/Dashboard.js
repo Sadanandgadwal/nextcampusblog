@@ -21,7 +21,7 @@ import Image from "next/image";
 // import Logo12 from "../../static/logoLight.webp";
 import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import { WidthFull } from "@mui/icons-material";
-import { Dashboard } from "../../store/zustore";
+// import { Dashboard } from "../../store/zustore";
 const statuses = {
   Paid: "text-green-700 bg-green-50 ring-green-600/20",
   Withdraw: "text-gray-600 bg-gray-50 ring-gray-500/10",
