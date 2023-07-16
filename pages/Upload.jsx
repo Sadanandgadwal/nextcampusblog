@@ -3,23 +3,34 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import axios from "axios";
-const API_BASE = "https://nextcampusblog.onrender.com/";
+import { useDropzone } from "react-dropzone";
+// const API_BASE = "https://nextcampusblog.onrender.com/";
+const API_BASE = "https://ncblogbackend-production.up.railway.app/";
 
 const UploadModal = () => {
   const [title, setTitle] = useState("");
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
+  const [selectedImages, setSelectedImages] = useState([]);
   const [content, setContent] = useState();
-  // Fetch Categories
+  //TO drag and drop images
+  const onDrop = (acceptedFiles) => {
+    const images = acceptedFiles.map((file) => URL.createObjectURL(file));
+    setSelectedImages(images);
+  };
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  //To show all the categories i.e created
   const showCategory = async (event) => {
     event.preventDefault();
     try {
       const response = await axios.get(API_BASE + "api/category/list", {});
       const categoriesData = response.data.data;
       setCategories(categoriesData);
-      console.log("---------", categories.name, "++++++++++", selectedCategory);
+      //console.log("---------", categories.name, "++++++++++", selectedCategory);
+      toast.success(response.data.data);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       setCategories([]);
     }
   };
@@ -27,6 +38,11 @@ const UploadModal = () => {
   //   showCategory();
   // }, []); // Empty dependency array
   const handleSubmitBlog = async (event) => {
+    console.log("000000000", content);
+    console.log("title:", title);
+    console.log("Category:", selectedCategory);
+    console.log("-----------------selected Images-----------", images);
+    // consloe.log('image':image);
     event.preventDefault();
     try {
       const response = await axios.post(
@@ -65,22 +81,6 @@ const UploadModal = () => {
               />
             </span>
           </div>
-          {/* <div className="w-full flex justify-between gap-[1rem]" onLoad={showCategory}>
-            <span className="flex-1 text-end">Categories</span>
-            <span className="flex-[5] h-min border-2 border-[#787878]">
-              <input
-                className="w-full border-0 outline-none bg-transparent"
-                type="text"
-                placeholder="Brief"
-                id="category"
-                name="category"
-                autoComplete="category"
-                value={category}
-                onChange={(event) => setName(event.target.value)}        
-              />
-            </span>
-          </div> */}
-
           <div className="w-full flex justify-between gap-[1rem]">
             <span className="flex-1 text-end">Category</span>
             <span className="flex-[5] h-min border-2 border-[#787878]">
@@ -102,7 +102,40 @@ const UploadModal = () => {
           {/* <button type="button" onClick={showCategory}>
           Show Categories
         </button> */}
-
+          <div
+            {...getRootProps()}
+            className={`border-2 border-dashed border-gray-300 rounded-lg p-6 text-center ${
+              isDragActive ? "bg-blue-200" : "bg-gray-100"
+            }`}
+          >
+            <input {...getInputProps()} accept="image/*" multiple />
+            {selectedImages.length > 0 ? (
+              <div className="grid grid-cols-2 gap-4 mt-4">
+                {selectedImages.map((image, index) => (
+                  <img
+                    key={index}
+                    src={image}
+                    alt="Selected"
+                    className="max-h-64"
+                  />
+                ))}
+              </div>
+            ) : (
+              // Rest of the JSX for the initial message (
+              <p className="text-gray-500">
+                {isDragActive ? (
+                  <span>Drop the image here</span>
+                ) : (
+                  <>
+                    Drag and drop an image here, or{" "}
+                    <span className="text-blue-500">browse</span> to upload.
+                    <br />
+                    Upload all the image at once.
+                  </>
+                )}
+              </p>
+            )}
+          </div>
           <div className="w-full flex justify-between gap-[1rem]">
             <span className="flex-1 text-end">Article Text</span>
             <span className="flex-[5] h-min border-2 border-[#787878]"></span>

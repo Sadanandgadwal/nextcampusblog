@@ -5,7 +5,7 @@ import Link from "next/link";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useState } from "react";
-const API_BASE = "http://localhost:8080";
+const API_BASE = "https://ncblogbackend-production.up.railway.app/";
 export default function Forget() {
   const [email, setEmail] = useState();
   const validateEmail = () => {

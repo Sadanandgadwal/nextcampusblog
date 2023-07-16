@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Create an instance of Axios
 const tokenApi = axios.create({
-  baseURL: "https://nextcampusblog.onrender.com", // Replace with your API base URL
+  baseURL: "https://ncblogbackend-production.up.railway.app/", // Replace with your API base URL
 });
 
 tokenApi.interceptors.request.use(

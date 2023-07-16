@@ -27,7 +27,6 @@ const statuses = {
   Withdraw: "text-gray-600 bg-gray-50 ring-gray-500/10",
   Overdue: "text-red-700 bg-red-50 ring-red-600/10",
 };
-
 const clients = [
   {
     id: 1,
@@ -36,13 +35,12 @@ const clients = [
       "https://mailrelay.com/wp-content/uploads/2018/03/que-es-un-blog-1.png",
   },
 ];
-
 const navigation = [
   { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
-  { name: "Users", href: "#", icon: UsersIcon, current: false },
+  { name: "Users", href: "./Users", icon: UsersIcon, current: false },
   { name: "Blogs", href: "#", icon: FolderIcon, current: false },
   { name: "Category", href: "#", icon: CalendarIcon, current: false },
-  { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
+  { name: "Reports", href: "./Reports", icon: ChartPieIcon, current: false },
 ];
 
 const teams = [
@@ -351,7 +349,7 @@ export default function Example() {
                     className="overflow-hidden rounded-xl border border-gray-200"
                   >
                     <div className="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
-                      <Image
+                      <img
                         src={client.imageUrl}
                         alt={client.name}
                         className="h-12 w-12 flex-none rounded-lg bg-white object-cover ring-1 ring-gray-900/10"

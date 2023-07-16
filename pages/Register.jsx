@@ -6,7 +6,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Modal from "react-modal";
 import axios from "axios";
-const API_BASE = "https://nextcampusblog.onrender.com/";
+// const API_BASE = "https://nextcampusblog.onrender.com/";
+const API_BASE = "https://ncblogbackend-production.up.railway.app/";
 
 const handleSigninWithGoogle = async (event) => {
   event.preventDefault();
@@ -16,7 +17,7 @@ const handleSigninWithGoogle = async (event) => {
     // alert(response.data.data.data.token);
     window.location.href = response.data.data.authorizeUrl;
   } catch (error) {
-    console.error(error);
+    console.log(error.err);
   }
 };
 const customStyles = {
@@ -123,24 +124,8 @@ export default function Register() {
           email,
           password,
         });
-        console.log(
-          "-----",
-          name,
-          "-------",
-          mobile,
-          "----------",
-          email,
-          "-------------",
-          password
-        );
-        // toast.success(response.data);
-        // console.log(response.data);
-        console.log("---------------------------");
-        // console.log(response.data.data); // Handle the response data as needed
-        // console.log(response.data.data.res.err);
-        // console.log(response.data.data.res);
-        // console.log(response.data.res.err);----------------------problem to show response msg
-        // console.log(response.error.err);
+        alert("Hi");
+        console.log("HI", response);
       } catch (error) {
         toast.error(error);
       }

@@ -3,8 +3,8 @@ import Logo from "../static/logoLight.webp";
 import Link from "next/link";
 import Signin from "@/pages/Signin";
 import { useEffect, useState } from "react";
-
-const API_BASE = "https://nextcampusblog.onrender.com/api/";
+const API_BASE = "https://ncblogbackend-production.up.railway.app/api/";
+//const API_BASE = "https://nextcampusblog.onrender.com/api/";
 
 const Header = () => {
   const [user_id, setuser_id] = useState({ log: "Signin", out: false });

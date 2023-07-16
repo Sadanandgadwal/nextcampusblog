@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_BASE = "https://nextcampusblog.onrender.com";
+const API_BASE = "https://ncblogbackend-production.up.railway.app/";
 export default async function handler(req, res) {
   if (req.method === "POST") {
     try {

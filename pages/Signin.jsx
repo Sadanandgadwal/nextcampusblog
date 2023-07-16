@@ -6,38 +6,56 @@ import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import tokenApi from "@/components/tokenApi";
 import "react-toastify/dist/ReactToastify.css";
-const API_BASE = "https://nextcampusblog.onrender.com/";
+// const API_BASE = "https://nextcampusblog.onrender.com/";
+const API_BASE = "https://ncblogbackend-production.up.railway.app/";
 
 export default function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const validateEmail = () => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regex.test(email)) {
+      toast.error("Invalid email address.");
+      return false;
+    }
+    return true;
+  };
+  //password validation
+  const validatePassword = () => {
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters long.");
+      return false;
+    }
+    return true;
+  };
   const handleSignin = async (event) => {
     event.preventDefault();
+    if (validateEmail() && validatePassword())
+      try {
+        const response = await axios.post(
+          API_BASE + "api/auth/login",
+          {
+            email,
+            password,
+          }
+          //say aman to enable cors
+          // ,
+          // { withCredentials: true }
+        );
+        console.log(response.data.data);
+        toast.success(response.data.data);
+        localStorage.setItem("token", response.data.data.token);
+        localStorage.setItem("userInfo", response.data.data._doc.name);
+        localStorage.setItem("user_id", response.data.data._doc._id);
+        toast.success(response.data.msg);
 
-    try {
-      const response = await axios.post(
-        API_BASE + "api/auth/login",
-        {
-          email,
-          password,
-        }
-        //say aman to enable cors
-        // ,
-        // { withCredentials: true }
-      );
-
-      localStorage.setItem("token", response.data.data.token);
-      localStorage.setItem("userInfo", response.data.data._doc.name);
-      localStorage.setItem("userInfo", response.data.data._doc.id);
-      toast.success(response.data.msg);
-
-      window.location.href = "/";
-      console.log(document.cookie);
-    } catch (error) {
-      //toast.error(res.data.error);
-      console.error(error);
-    }
+        window.location.href = "/";
+        console.log(document.cookie);
+      } catch (error) {
+        //toast.error(res.data.error);
+        toast.error(error);
+        console.error(error);
+      }
   };
   const handleSigninWithGoogle = async (event) => {
     event.preventDefault();
@@ -54,6 +72,7 @@ export default function Signin() {
 
   return (
     <>
+      <ToastContainer />
       <div className="flex min-h-full flex-1">
         <div className="flex flex-1 flex-col justify-center px-2 py-6 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
           <div className="mx-auto w-full max-w-sm lg:w-96">

@@ -6,23 +6,9 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import Link from "next/link";
 
 import axios from "axios";
-
+const API_BASE =
+  "https://https://ncblogbackend-production.up.railway.app//api/";
 const PostCard = ({ blog }) => {
-  const [categories, setCategories] = useState([]);
-  // const [selectedCategory,setSelectedCategory] = useState([]);
-  // const showCategory = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     const response = await axios.get(API_BASE + "api/category/list", {});
-  //     const categoriesData = response.data.data;
-  //     setCategories(categoriesData);
-  //     console.log('---------',categories.name,'++++++++++',selectedCategory);
-  //   } catch (error) {
-  //     console.error(error);
-  //     setCategories([]);
-  //   }
-  // };
-
   return (
     <Link key={blog._id} href={`/post/${blog._id}`}>
       <div className="flex place-content-center">
@@ -40,12 +26,11 @@ const PostCard = ({ blog }) => {
               </div>
               {/* <div className="font-semibold">{blog.author}</div> */}
             </div>
-            <h1 className="font-bold text-2xl">{blog.title}</h1>
+            <h1 className="font-bold text-2xl"></h1>
             {/* <div className="text-[#787878]">{blog.description}</div> */}
             <div className="flex items-center justify-between text-[#787878]">
               <span className="my-2 text-[1rem]">
-                {blog.date}
-                {blog.category}
+                {blog.content}
                 <span className="bg-[#F2F3F2] p-1 rounded-full"></span>
               </span>
               <span className="cursor-pointer">
@@ -54,7 +39,8 @@ const PostCard = ({ blog }) => {
             </div>
           </div>
           <div className="flex-1">
-            <Image src={pLogo} alt="thumbnail" height={120} width={120} />
+            <h2></h2>
+            <img src={blog.images} alt="thumbnail" height={120} width={120} />
           </div>
         </div>
       </div>
@@ -68,9 +54,7 @@ const AllPosts = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get(
-          "https://nextcampusblog.onrender.com/api/blog/readAllBlogs"
-        );
+        const response = await axios.get(API_BASE, "/blog/readAllBlogs");
         const blogs = response.data.data;
         setBlogs(blogs);
         console.log(blogs.title);
