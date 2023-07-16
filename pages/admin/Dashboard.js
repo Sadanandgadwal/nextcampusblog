@@ -59,8 +59,8 @@ function classNames(...classes) {
 }
 
 export default function Example() {
-  const Action = User((store) => store.Action);
-  const componentState = tokenStore((store) => store.componentState);
+  // const Action = User((store) => store.Action);
+  // const componentState = tokenStore((store) => store.componentState);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
