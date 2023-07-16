@@ -8,10 +8,16 @@ import tokenApi from "@/components/tokenApi";
 import "react-toastify/dist/ReactToastify.css";
 // const API_BASE = "https://nextcampusblog.onrender.com/";
 const API_BASE = "https://ncblogbackend-production.up.railway.app/";
+import { tokenStore } from "../store/zustore";
 
 export default function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const Action = tokenStore((store) => store.Action);
+  const UserAction = tokenStore((store) => store.UserAction);
+  const UserData = tokenStore((store) => store.UserData);
+
   const validateEmail = () => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!regex.test(email)) {
@@ -44,9 +50,12 @@ export default function Signin() {
         );
         console.log(response.data.data);
         toast.success(response.data.data);
-        localStorage.setItem("token", response.data.data.token);
-        localStorage.setItem("userInfo", response.data.data._doc.name);
-        localStorage.setItem("user_id", response.data.data._doc._id);
+        // localStorage.setItem("token", response.data.data.token);
+        Action(response.data.data.token);
+        // localStorage.setItem("userInfo", response.data.data._doc.name);
+        UserData(response.data.data._doc.name);
+        // localStorage.setItem("user_id", response.data.data._doc._id);
+        UserAction(response.data.data._doc._id);
         toast.success(response.data.msg);
 
         window.location.href = "/";

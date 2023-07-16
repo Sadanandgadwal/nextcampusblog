@@ -5,15 +5,16 @@ import Signin from "@/pages/Signin";
 import { useEffect, useState } from "react";
 const API_BASE = "https://ncblogbackend-production.up.railway.app/api/";
 //const API_BASE = "https://nextcampusblog.onrender.com/api/";
-
+import { tokenStore } from "../store/zustore";
 const Header = () => {
+  const data = tokenStore((store) => store.data);
   const [user_id, setuser_id] = useState({ log: "Signin", out: false });
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
+    if (localStorage.getItem("userinfo")) {
       setuser_id({
         out: true,
-        log: "Hi , " + localStorage.getItem("userInfo"),
+        log: "Hi , " + data,
       });
     }
   }, []);

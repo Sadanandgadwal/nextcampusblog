@@ -1,4 +1,5 @@
-import React from 'react';
+import React from "react";
+
 const Users = () => {
   return (
     <div className="bg-white rounded-lg shadow-md p-4 max-w-md mx-auto">
