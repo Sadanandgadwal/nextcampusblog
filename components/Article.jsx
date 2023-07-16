@@ -9,7 +9,7 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import axios from "axios";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { useSpeechSynthesis, SpeechSynthesis } from "react-speech-kit";
+// import { useSpeechSynthesis, SpeechSynthesis } from "react-speech-kit";
 import Pimg from "../static/IMG_3488.jpg";
 import Articleimage from "../static/martin-sanchez-G78c3DPmD_A-unsplash.jpg";
 import logo from "../static/martin-sanchez-G78c3DPmD_A-unsplash.jpg";
@@ -22,7 +22,7 @@ const ArticleMain = () => {
   const [dislikes, setDislikes] = useState(0);
   const [comments, setComments] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
-  const { speak, cancel, speaking, supported } = useSpeechSynthesis();
+  // const { speak, cancel, speaking, supported } = useSpeechSynthesis();
 
   let blogId;
   const handleLike = async () => {
