@@ -43,12 +43,6 @@ const navigation = [
   { name: "Reports", href: "./Reports", icon: ChartPieIcon, current: false },
 ];
 
-const teams = [
-  { id: 1, name: "Sadanand", href: "#", initial: "S", current: false },
-  { id: 2, name: "Aman", href: "#", initial: "A", current: false },
-  { id: 3, name: "Ravi", href: "#", initial: "R", current: false },
-];
-
 const userNavigation = [
   { name: "Your profile", href: "#" },
   { name: "Sign out", href: "./Signin.js" },
@@ -58,7 +52,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
+export default function Dashboard({ children }) {
   // const Action = User((store) => store.Action);
   // const componentState = tokenStore((store) => store.componentState);
 
@@ -149,31 +143,6 @@ export default function Example() {
                             ))}
                           </ul>
                         </li>
-                        <li>
-                          <div className="text-xs font-semibold leading-6 text-gray-400">
-                            Members
-                          </div>
-                          <ul role="list" className="-mx-2 mt-2 space-y-1">
-                            {teams.map((team) => (
-                              <li key={team.name}>
-                                <a
-                                  href={team.href}
-                                  className={classNames(
-                                    team.current
-                                      ? "bg-gray-800 text-white"
-                                      : "text-gray-400 hover:text-white hover:bg-gray-800",
-                                    "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
-                                  )}
-                                >
-                                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
-                                    {team.initial}
-                                  </span>
-                                  <span className="truncate">{team.name}</span>
-                                </a>
-                              </li>
-                            ))}
-                          </ul>
-                        </li>
                       </ul>
                     </nav>
                   </div>
@@ -210,31 +179,6 @@ export default function Example() {
                             aria-hidden="true"
                           />
                           {item.name}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-                <li>
-                  <div className="text-xs font-semibold leading-6 text-gray-400">
-                    Members
-                  </div>
-                  <ul role="list" className="-mx-2 mt-2 space-y-1">
-                    {teams.map((team) => (
-                      <li key={team.name}>
-                        <a
-                          href={team.href}
-                          className={classNames(
-                            team.current
-                              ? "bg-gray-800 text-white"
-                              : "text-gray-400 hover:text-white hover:bg-gray-800",
-                            "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
-                          )}
-                        >
-                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
-                            {team.initial}
-                          </span>
-                          <span className="truncate">{team.name}</span>
                         </a>
                       </li>
                     ))}
@@ -340,95 +284,8 @@ export default function Example() {
             </div>
           </div>
 
-          <main className="py-10">
-            <div className="px-4 sm:px-6 lg:px-8">
-              <ul
-                role="list"
-                className="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8"
-              >
-                {clients.map((client) => (
-                  <li
-                    key={client.id}
-                    className="overflow-hidden rounded-xl border border-gray-200"
-                  >
-                    <div className="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
-                      <img
-                        src={client.imageUrl}
-                        alt={client.name}
-                        className="h-12 w-12 flex-none rounded-lg bg-white object-cover ring-1 ring-gray-900/10"
-                        width={8}
-                        height={8}
-                      />
-                      <div className="text-sm font-medium leading-6 text-gray-900">
-                        {client.name}
-                      </div>
-                      <Menu as="div" className="relative ml-auto">
-                        <Menu.Button className="-m-2.5 block p-2.5 text-gray-400 hover:text-gray-500">
-                          <span className="sr-only">Open options</span>
-                          <EllipsisHorizontalIcon
-                            className="h-5 w-5"
-                            aria-hidden="true"
-                          />
-                        </Menu.Button>
-                        <Transition
-                          as={Fragment}
-                          enter="transition ease-out duration-100"
-                          enterFrom="transform opacity-0 scale-95"
-                          enterTo="transform opacity-100 scale-100"
-                          leave="transition ease-in duration-75"
-                          leaveFrom="transform opacity-100 scale-100"
-                          leaveTo="transform opacity-0 scale-95"
-                        >
-                          <Menu.Items className="absolute right-0 z-10 mt-0.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                            <Menu.Item>
-                              {({ active }) => (
-                                <a
-                                  href="#"
-                                  className={classNames(
-                                    active ? "bg-gray-50" : "",
-                                    "block px-3 py-1 text-sm leading-6 text-gray-900"
-                                  )}
-                                >
-                                  View
-                                  <span className="sr-only">
-                                    , {client.name}
-                                  </span>
-                                </a>
-                              )}
-                            </Menu.Item>
-                            <Menu.Item>
-                              {({ active }) => (
-                                <a
-                                  href="#"
-                                  className={classNames(
-                                    active ? "bg-gray-50" : "",
-                                    "block px-3 py-1 text-sm leading-6 text-gray-900"
-                                  )}
-                                >
-                                  Edit
-                                  <span className="sr-only">
-                                    , {client.name}
-                                  </span>
-                                </a>
-                              )}
-                            </Menu.Item>
-                          </Menu.Items>
-                        </Transition>
-                      </Menu>
-                    </div>
-                    <dl className="-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6">
-                      <div className="flex justify-between gap-x-4 py-3">
-                        <dt className="text-gray-500">Blog Dashboard</dt>
-                        <dd className="text-gray-700"></dd>
-                      </div>
-                      <div className="flex justify-between gap-x-4 py-3">
-                        <dd className="flex items-start gap-x-2"></dd>
-                      </div>
-                    </dl>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <main className="py-0">
+            <div className="px-0 sm:px-1 lg:px-0.1">{children}</div>
           </main>
         </div>
       </div>

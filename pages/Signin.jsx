@@ -2,15 +2,17 @@ import { useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 import Logo from "../static/logoLight.webp";
+import loginsvg from "../static/loginsvvg.png";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import tokenApi from "@/components/tokenApi";
 import "react-toastify/dist/ReactToastify.css";
-// const API_BASE = "https://nextcampusblog.onrender.com/";
-const API_BASE = "https://ncblogbackend-production.up.railway.app/";
 import { tokenStore } from "../store/zustore";
+import { useAdminStore } from "../store/zustore";
 
 export default function Signin() {
+  const adminAction = useAdminStore((state) => state.adminAction);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -39,7 +41,7 @@ export default function Signin() {
     if (validateEmail() && validatePassword())
       try {
         const response = await axios.post(
-          API_BASE + "api/auth/login",
+          "/api/auth/login",
           {
             email,
             password,
@@ -48,6 +50,8 @@ export default function Signin() {
           // ,
           // { withCredentials: true }
         );
+        adminAction(email, password);
+
         console.log(response.data.data);
         toast.success(response.data.data);
         // localStorage.setItem("token", response.data.data.token);
@@ -69,7 +73,7 @@ export default function Signin() {
   const handleSigninWithGoogle = async (event) => {
     event.preventDefault();
     try {
-      const response = await tokenApi.post("api/auth/google/url");
+      const response = await tokenApi.post("/api/auth/google/url");
       const { authorizeUrl, token } = response.data.data;
       window.location.href = authorizeUrl;
       console.log(token);
@@ -162,6 +166,7 @@ export default function Signin() {
                     <button
                       type="submit"
                       className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      onClick={handleSignin}
                     >
                       Sign in
                     </button>
@@ -188,6 +193,7 @@ export default function Signin() {
             alt=""
           />
           <div className="absolute text-5xl text-white  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <Image className="h-70 w-50 " src={loginsvg} alt="Logo" />
             Register if you Don't have account ?{"  "}
             <div className="text-4xl mt-3 text-gray-300">
               <Link href="/Register">Click Here</Link>

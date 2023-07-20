@@ -1,5 +1,6 @@
 import React from "react";
 import Chart from "chart.js/auto";
+import Dashboard from "@/components/Dashboard";
 export default function Reports() {
   const chart1Ref = React.useRef(null);
   const chart2Ref = React.useRef(null);
@@ -79,16 +80,18 @@ export default function Reports() {
   }, []);
 
   return (
-    <section className="flex flex-col md:flex-row gap-4">
-      <div className="flex-1">
-        <canvas ref={chart1Ref} />
-      </div>
-      <div className="flex-1">
-        <canvas ref={chart2Ref} />
-      </div>
-      <div className="flex-1">
-        <canvas ref={chart3Ref} />
-      </div>
-    </section>
+    <Dashboard>
+      <section className="flex flex-col md:flex-row gap-4">
+        <div className="flex-1">
+          <canvas ref={chart1Ref} />
+        </div>
+        <div className="flex-1">
+          <canvas ref={chart2Ref} />
+        </div>
+        <div className="flex-1">
+          <canvas ref={chart3Ref} />
+        </div>
+      </section>
+    </Dashboard>
   );
 }

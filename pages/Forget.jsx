@@ -5,7 +5,7 @@ import Link from "next/link";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useState } from "react";
-const API_BASE = "https://ncblogbackend-production.up.railway.app/";
+
 export default function Forget() {
   const [email, setEmail] = useState();
   const validateEmail = () => {
@@ -19,7 +19,7 @@ export default function Forget() {
   const sendOtp = async () => {
     if (validateEmail()) {
       try {
-        const response = await axios.post(API_BASE + "api/otp/sendOtp", {
+        const response = await axios.post("/api/otp/sendOtp", {
           email,
         });
         toast.success("otp send successfully");

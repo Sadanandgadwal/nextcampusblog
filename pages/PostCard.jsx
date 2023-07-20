@@ -6,8 +6,7 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import Link from "next/link";
 
 import axios from "axios";
-const API_BASE =
-  "https://https://ncblogbackend-production.up.railway.app//api/";
+const API_BASE = "https://ncblogbackend-production.up.railway.app/api/";
 const PostCard = ({ blog }) => {
   return (
     <Link key={blog._id} href={`/post/${blog._id}`}>
@@ -54,7 +53,7 @@ const AllPosts = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get(API_BASE, "/blog/readAllBlogs");
+        const response = await axios.post("/api/blog/readAllBlogs");
         const blogs = response.data.data;
         setBlogs(blogs);
         console.log(blogs.title);

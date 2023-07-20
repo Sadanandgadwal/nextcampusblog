@@ -6,13 +6,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Modal from "react-modal";
 import axios from "axios";
-// const API_BASE = "https://nextcampusblog.onrender.com/";
-const API_BASE = "https://ncblogbackend-production.up.railway.app/";
 
 const handleSigninWithGoogle = async (event) => {
   event.preventDefault();
   try {
-    const response = await axios.get(API_BASE + "api/auth/google/url", {});
+    const response = await axios.get("/api/auth/google/url", {});
     toast.success("SignUp Successfully");
     // alert(response.data.data.data.token);
     window.location.href = response.data.data.authorizeUrl;
@@ -84,7 +82,7 @@ export default function Register() {
     setIsOpen(true);
     if (validateEmail()) {
       try {
-        const response = await axios.post(API_BASE + "api/otp/sendOtp", {
+        const response = await axios.post("/api/otp/sendOtp", {
           email,
         });
         toast.success("otp send successfully");
@@ -97,7 +95,7 @@ export default function Register() {
   const handleVerifyOtp = async () => {
     // toast.error('----------------otp-----------',otp);
     try {
-      const response = await axios.post(API_BASE + "api/otp/verifyOtp", {
+      const response = await axios.post("/api/otp/verifyOtp", {
         newEmail: email,
         newOtp: otp,
       });
@@ -118,7 +116,7 @@ export default function Register() {
     ) {
       try {
         //console.log('-----',name,'-------',mobile,'----------',email,'-------------',password);
-        const response = await axios.post(API_BASE + "api/auth/register", {
+        const response = await axios.post("/api/auth/register", {
           name,
           mobile,
           email,

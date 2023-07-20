@@ -13,7 +13,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Pimg from "../static/IMG_3488.jpg";
 import Articleimage from "../static/martin-sanchez-G78c3DPmD_A-unsplash.jpg";
 import logo from "../static/martin-sanchez-G78c3DPmD_A-unsplash.jpg";
-const API_BASE = "https://ncblogbackend-production.up.railway.app/api/";
+
 import { formatDateTime } from "./utility";
 
 const ArticleMain = () => {
@@ -48,7 +48,7 @@ const ArticleMain = () => {
       let url = window.location.href;
       blogId = url.substring(url.lastIndexOf("/") + 1);
       if (blogId) {
-        const apiUrl = API_BASE + `blog/${blogId}`;
+        const apiUrl = `/api/blog/${blogId}`;
         try {
           const response = await axios.post(apiUrl);
           console.log(response.data.data);
@@ -89,7 +89,7 @@ const ArticleMain = () => {
                 <div className="flex-1 flex flex-col justify-center">
                   <div>{Author}</div>
                   <div className="flex gap-[.2rem] text-[#787878]">
-                    <div>
+                    {/* <div>
                       {supported ? (
                         <div>
                           <button onClick={handleSpeak} disabled={speaking}>
@@ -100,7 +100,7 @@ const ArticleMain = () => {
                       ) : (
                         <div>Text-to-speech not supported</div>
                       )}
-                    </div>
+                    </div> */}
                     <span className="flex items-center gap-[.2rem] text-[#3B91F8]"></span>
                   </div>
                 </div>
@@ -144,45 +144,45 @@ const ArticleMain = () => {
                 {content[0].text}
               </div>
             </div>
-            <div class="flex items-start space-x-4 py-8">
-              <div class="flex-shrink-0">
+            <div className="flex items-start space-x-4 py-8">
+              <div className="flex-shrink-0">
                 <Image
-                  class="inline-block h-10 w-10 rounded-full"
+                  className="inline-block h-10 w-10 rounded-full"
                   src={Pimg}
                   alt=""
                 />
               </div>
 
-              <div class="min-w-0 flex-1">
-                <form action="#" class="relative">
-                  <div class="overflow-hidden rounded-lg shadow-sm ring-1 ring-inset ring-gray-300 ">
-                    <label for="comment" class="sr-only">
+              <div className="min-w-0 flex-1">
+                <form action="#" className="relative">
+                  <div className="overflow-hidden rounded-lg shadow-sm ring-1 ring-inset ring-gray-300 ">
+                    <label for="comment" className="sr-only">
                       Add your comment
                     </label>
                     <textarea
                       rows="3"
                       name="comment"
                       id="comment"
-                      class="block w-full resize-none border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      className="block w-full resize-none border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="Add your comment..."
                     ></textarea>
 
-                    <div class="py-2" aria-hidden="true">
-                      <div class="py-px">
-                        <div class="h-9"></div>
+                    <div className="py-2" aria-hidden="true">
+                      <div className="py-px">
+                        <div className="h-9"></div>
                       </div>
                     </div>
                   </div>
 
-                  <div class="absolute inset-x-0 bottom-0 flex justify-between py-2 pl-3 pr-2">
-                    <div class="flex items-center space-x-5">
-                      <div class="flex items-center">
+                  <div className="absolute inset-x-0 bottom-0 flex justify-between py-2 pl-3 pr-2">
+                    <div className="flex items-center space-x-5">
+                      <div className="flex items-center">
                         <button
                           type="button"
-                          class="-m-2.5 flex h-10 w-10 items-center justify-center rounded-full text-gray-400 hover:text-gray-500"
+                          className="-m-2.5 flex h-10 w-10 items-center justify-center rounded-full text-gray-400 hover:text-gray-500"
                         >
                           <svg
-                            class="h-5 w-5"
+                            className="h-5 w-5"
                             viewBox="0 0 20 20"
                             fill="currentColor"
                             aria-hidden="true"
@@ -193,14 +193,14 @@ const ArticleMain = () => {
                               clip-rule="evenodd"
                             />
                           </svg>
-                          <span class="sr-only">Attach a file</span>
+                          <span className="sr-only">Attach a file</span>
                         </button>
                       </div>
                     </div>
-                    <div class="flex-shrink-0">
+                    <div className="flex-shrink-0">
                       <button
                         type="submit"
-                        class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm "
+                        className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm "
                       >
                         Post
                       </button>

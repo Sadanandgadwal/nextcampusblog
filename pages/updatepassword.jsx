@@ -6,7 +6,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Password } from "@mui/icons-material";
 import Link from "next/link";
-const API_BASE = "https://nextcampusblog.onrender.com/api/";
+
 export default function Forget() {
   const [Password, setPassword] = useState();
   const savePassword = () => {};

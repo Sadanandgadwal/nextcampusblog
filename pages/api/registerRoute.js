@@ -1,12 +1,9 @@
 import axios from "axios";
-const API_BASE = "https://ncblogbackend-production.up.railway.app/";
+
 export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
-      const response = await axios.post(
-        API_BASE + "/api/auth/Register",
-        req.body
-      );
+      const response = await axios.post("/api/auth/Register", req.body);
       res.status(response.status).json(response.data);
     } catch (error) {
       const { status, data } = error.response;

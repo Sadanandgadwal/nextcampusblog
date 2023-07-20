@@ -15,10 +15,28 @@ export const tokenStore = create(
   )
 );
 
-// export const Dashboard = create((set) => ({
-//   componentState: "",
-//   Action: (val) => set((state) => ({ componentState: val })),
-// }));
-// export const useWatchListStore = create(
-//   persist(watchListStore, { name: "watchList" })
-// );
+const AdminStore = (set, get) => ({
+  AdminState: false,
+  adminAction: (email, password) => {
+    if (email === "admin@gmail.com" && password === "admin@") {
+      set((state) => ({ AdminState: !state.AdminState }));
+      window.location.href = "/admin/Blogs";
+    }
+  },
+});
+
+export const useAdminStore = create(persist(AdminStore, { name: "Admin" }));
+
+// login: async (event) => {
+//   event.preventDefault();
+//   if (validateEmail() && validatePassword())
+//     try {
+//       const response = await axios.post("/api/auth/login", {
+//         email,
+//         password,
+//       });
+//       console.log(response.data.data);
+//     } catch (error) {
+//       console.error(error);
+//     }
+// },

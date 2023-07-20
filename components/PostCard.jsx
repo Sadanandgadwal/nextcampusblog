@@ -3,8 +3,7 @@ import Image from "next/image";
 import Logo from "../static/logoLight.webp";
 import pLogo from "../static/martin-sanchez-G78c3DPmD_A-unsplash.jpg";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-const API_BASE = "https://ncblogbackend-production.up.railway.app/api/";
-// const API_BASE='https://nextcampusblog.onrender.com/';
+
 import { formatDateTime } from "./utility";
 
 import Link from "next/link";
@@ -30,43 +29,66 @@ const PostCard = ({ blog }) => {
   };
   return (
     <Link key={blog._id} href={`/post/${blog._id}`}>
-      <div className="flex place-content-center">
-        <div className="max-w-[110rem] h-[11rem] flex pl-2 items-center gap-[2rem] cursor-pointer">
-          <div className="flex-[3.5] flex flex-col">
-            <div className="flex gap-[1rem]">
-              <div className="grid place-items-center rounded-full overflow-hidden h-[1.6rem] w-[1.6rem]">
-                {/* <Image
-                  src={Logo}
-                  alt="author"
-                  className="object-cover"
-                  height={40}
-                  width={40}
-                /> */}
-              </div>
-              {/* <div className="font-semibold">{blog.author}</div> */}
+      <div className="bg-white ">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl lg:max-w-4xl">
+            <div className="mt-16 space-y-20 lg:mt-20 lg:space-y-20">
+              <article className="relative isolate flex flex-col gap-8 lg:flex-row">
+                <div className="relative aspect-[16/9] sm:aspect-[2/1] lg:aspect-square lg:w-64 lg:shrink-0">
+                  <img
+                    src={blog.images}
+                    alt=""
+                    className="absolute inset-0 h-full w-full rounded-2xl bg-gray-50 object-cover"
+                  />
+                  <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-x-4 text-xs">
+                    <time
+                      dateTime={formatDateTime(blog.date)}
+                      className="text-gray-500"
+                    >
+                      {formatDateTime(blog.date)}
+                    </time>
+                    <a
+                      href={blog.category}
+                      className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
+                    >
+                      {blog.title}
+                    </a>
+                  </div>
+                  <div className="group relative max-w-xl">
+                    <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                      <a href={blog.href}>
+                        <span className="absolute inset-0" />
+                        {blog.title}
+                      </a>
+                    </h3>
+                    <p className="mt-5 text-sm leading-6 text-gray-600">
+                      {/* {blog.content} */}
+                    </p>
+                  </div>
+                  <div className="mt-6 flex border-t border-gray-900/5 pt-6">
+                    <div className="relative flex items-center gap-x-4">
+                      <img
+                        src={blog.images}
+                        alt=""
+                        className="h-10 w-10 rounded-full bg-gray-50"
+                      />
+                      <div className="text-sm leading-6">
+                        <p className="font-semibold text-gray-900">
+                          <a href={blog.herf}>
+                            <span className="absolute inset-0" />
+                            {blog.user_id.name}
+                          </a>
+                        </p>
+                        <p className="text-gray-600">{blog.role}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
             </div>
-            <h2>{blog.user_id.name}</h2>
-            <h1 className="font-bold text-2xl">{blog.title}</h1>
-            {/* <div className="text-[#787878]">{blog.description}</div> */}
-            <div className="flex items-center justify-between text-[#787878]">
-              <span className="my-2 text-[1rem]">
-                {formatDateTime(blog.date)}
-              </span>
-              <div className="flex items-center gap-2">
-                <BookmarkBorderIcon
-                  className="h-5 w-5 cursor-pointer"
-                  onClick={handleShare}
-                />
-              </div>
-              {/* <div>
-        <span className="bg-[#F2F3F2] p-1 rounded-full">
-                {blog.content[0].text}</span>
-        </div> */}
-            </div>
-          </div>
-          <div className="flex-1">
-            <img src={blog.images} alt="thumbnail" height={120} width={120} />
-            {/* <Image src={images} alt="thumbnail" height={120} width={120} /> */}
           </div>
         </div>
       </div>
@@ -80,7 +102,7 @@ const AllPosts = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get(API_BASE + "blog/readAllBlogs");
+        const response = await axios.post("/api/blog/readAllBlogs");
         // "https://nextcampusblog.onrender.com/api/blog/readAllBlogs"
         const blogs = response.data.data;
         setBlogs(blogs);
@@ -103,17 +125,3 @@ const AllPosts = () => {
 };
 
 export default AllPosts;
-
-// const [selectedCategory,setSelectedCategory] = useState([]);
-// const showCategory = async (event) => {
-//   event.preventDefault();
-//   try {
-//     const response = await axios.get(API_BASE + "api/category/list", {});
-//     const categoriesData = response.data.data;
-//     setCategories(categoriesData);
-//     console.log('---------',categories.name,'++++++++++',selectedCategory);
-//   } catch (error) {
-//     console.error(error);
-//     setCategories([]);
-//   }
-// };
